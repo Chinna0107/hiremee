@@ -3,12 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 import { HiMail, HiLockClosed, HiArrowRight } from 'react-icons/hi';
 import { MdConstruction } from 'react-icons/md';
+import logo from '../../assets/logo.png';
 import './Auth.css';
 
 const DEMOS = [
-  { label: 'Admin', email: 'admin@hiremee.in', password: 'admin123', color: '#d97706' },
-  { label: 'Worker', email: 'ravi@hiremee.in', password: 'worker123', color: '#2563eb' },
-  { label: 'Customer', email: 'customer@hiremee.in', password: 'cust123', color: '#16a34a' },
+  { label: 'Admin', email: 'admin@ourlocal.in', password: 'admin123', color: '#0f172a' },
+  { label: 'Worker', email: 'ravi@ourlocal.in', password: 'worker123', color: '#0284c7' },
 ];
 
 export default function Login() {
@@ -36,9 +36,13 @@ export default function Login() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <Link to="/" className="auth-brand"><MdConstruction className="auth-brand-icon" /> Hire<b>Mee</b></Link>
+        <div className="auth-logo-wrap">
+          <Link to="/">
+            <img src={logo} alt="Mana Local" className="auth-logo" />
+          </Link>
+        </div>
         <h1>Welcome back</h1>
-        <p className="auth-sub">Login to your account</p>
+        <p className="auth-sub">Login to your professional account</p>
 
         <div className="demo-pills">
           {DEMOS.map(d => (

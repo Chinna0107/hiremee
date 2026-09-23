@@ -5,6 +5,8 @@ import {
   HiLocationMarker, HiCalendar, HiUser, HiArrowRight,
 } from 'react-icons/hi';
 import { MdDirectionsCar } from 'react-icons/md';
+import { HiBadgeCheck } from 'react-icons/hi';
+import '../Workers.css'; // For the worker-card styles
 
 export default function WorkerHome() {
   const user = useAuthStore(s => s.user);
@@ -46,6 +48,39 @@ export default function WorkerHome() {
           >
             {user.available ? '● Online' : '○ Offline'}
           </button>
+        </div>
+      </div>
+
+      {/* My Profile Card */}
+      <div className="admin-section" style={{ marginTop: '0', marginBottom: '24px' }}>
+        <h2 style={{ fontSize: '18px', marginBottom: '16px' }}>My Profile</h2>
+        <div className="worker-card" style={{ margin: 0 }}>
+          <div className="wc-header">
+            <img src={user.image || `https://ui-avatars.com/api/?name=${user.name}&background=random`} alt={user.name} className="wc-avatar" />
+            <div className="wc-info">
+              <h3>{user.name} <HiBadgeCheck className="verified-badge" /></h3>
+              <div className="wc-rating">
+                <HiStar className="star-icon" /> {user.rating} 
+                <span>({user.jobsDone || completedJobs.length} jobs)</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="wc-details">
+            <div className="wc-detail-item">
+              <HiBriefcase className="wc-icon" />
+              <span>Experience: <strong>{user.experience || 'N/A'}</strong></span>
+            </div>
+            <div className="wc-detail-item">
+              <HiLocationMarker className="wc-icon" />
+              <span>{user.location || 'Location Not Set'}</span>
+            </div>
+          </div>
+
+          <div className="wc-price">
+            <span>My Rate: </span>
+            <strong>₹{user.rate || 0}/hr</strong>
+          </div>
         </div>
       </div>
 

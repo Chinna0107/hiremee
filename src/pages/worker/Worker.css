@@ -1,4 +1,14 @@
-.worker-page { padding: 32px 40px; max-width: 900px; margin: 0 auto; }
+.worker-page { 
+  padding: 32px 40px; 
+  max-width: 900px; 
+  margin: 0 auto; 
+  animation: fadeInWorker 0.5s ease-out forwards;
+}
+
+@keyframes fadeInWorker {
+  0% { opacity: 0; transform: translateY(15px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
 
 .worker-header {
   display: flex;
@@ -50,6 +60,12 @@
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.ws-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+  border-color: var(--primary);
 }
 .ws-icon-wrap {
   width: 44px; height: 44px; border-radius: 12px;

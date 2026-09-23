@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 import { MdConstruction } from 'react-icons/md';
+import logo from '../assets/logo.png';
 import './Footer.css';
 
 export default function Footer() {
@@ -9,9 +10,12 @@ export default function Footer() {
       <div className="footer-inner">
         <div className="footer-brand">
           <Link to="/" className="footer-logo">
-            <MdConstruction className="footer-logo-icon" /> Hire<b>Mee</b>
+            <img src={logo} alt="Mana Local Logo" className="footer-logo-img" />
           </Link>
-          <p>India's #1 on-demand construction vehicle booking platform. Book JCBs, Cranes, Tippers & more — instantly.</p>
+          <p>Your trusted platform for booking verified local professionals. Plumbers, Electricians, and more — instantly.</p>
+          <p className="footer-contact"><strong>Phone:</strong> +91 98486 15849</p>
+          <p className="footer-contact"><strong>Email:</strong> info@ourlocal.in</p>
+          <p className="footer-contact"><strong>Address:</strong> Chimakurty</p>
           <div className="footer-social">
             <a href="#" aria-label="Twitter"><FaTwitter /></a>
             <a href="#" aria-label="Instagram"><FaInstagram /></a>
@@ -22,35 +26,29 @@ export default function Footer() {
 
         <div className="footer-col">
           <h4>Company</h4>
-          <Link to="#">About Us</Link>
-          <Link to="#">Investor Relations</Link>
-          <Link to="#">Terms & Conditions</Link>
-          <Link to="#">Privacy Policy</Link>
-          <Link to="#">Anti-discrimination Policy</Link>
-          <Link to="#">Careers</Link>
+          <Link to="/about">About Us</Link>
+          <Link to="/jobs">Careers</Link>
+          <Link to="/contact">Contact Us</Link>
         </div>
 
         <div className="footer-col">
           <h4>For Customers</h4>
-          <Link to="/browse">Browse Vehicles</Link>
+          <Link to="/browse">Browse Services</Link>
           <Link to="/orders">My Orders</Link>
-          <Link to="#">HireMee Reviews</Link>
-          <Link to="#">Categories Near You</Link>
-          <Link to="#">Contact Us</Link>
+          <Link to="/cart">My Cart</Link>
         </div>
 
         <div className="footer-col">
           <h4>For Professionals</h4>
-          <Link to="/login">Register as Operator</Link>
-          <Link to="#">Partner with Us</Link>
-          <Link to="#">Operator App</Link>
-          <Link to="#">Safety Guidelines</Link>
+          <Link to="/login">Register as Professional</Link>
+          <Link to="/jobs">Find Local Jobs</Link>
+          <Link to="/contact">Partner with Us</Link>
         </div>
       </div>
 
       <div className="footer-bottom">
-        <p>* As on December 31, 2024</p>
-        <p>© Copyright 2026 HireMee Technologies India Limited. All rights reserved.</p>
+        <p>* As on December 31, 2026</p>
+        <p>© Copyright 2026 Mana Local Technologies India Limited. All rights reserved.</p>
       </div>
     </footer>
   );

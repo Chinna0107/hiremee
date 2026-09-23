@@ -4,15 +4,18 @@ import { useStore } from '../store/useStore';
 import {
   HiHome, HiTruck, HiClipboardList, HiUser,
   HiChartBar, HiCollection, HiUsers, HiSearch,
-  HiCog, HiLocationMarker,
+  HiCog, HiLocationMarker, HiInformationCircle, HiPhone, HiBriefcase, HiOfficeBuilding
 } from 'react-icons/hi';
 import './BottomNav.css';
 
 const customerTabs = [
   { to: '/',       Icon: HiHome,          label: 'Home' },
-  { to: '/browse', Icon: HiTruck,         label: 'Book' },
-  { to: '/orders', Icon: HiClipboardList, label: 'Orders' },
-  { to: '/login',  Icon: HiUser,          label: 'Account' },
+  { to: '/browse', Icon: HiSearch,        label: 'Categories' },
+  { to: '/realestate', Icon: HiOfficeBuilding, label: 'Real Estate' },
+  { to: '/jobs',   Icon: HiBriefcase,     label: 'Jobs' },
+  { to: '/about',  Icon: HiInformationCircle, label: 'About Us' },
+  { to: '/contact',Icon: HiPhone,         label: 'Contact Us' },
+  { to: '/login',  Icon: HiUser,          label: 'Login' },
 ];
 
 const adminTabs = [
@@ -42,7 +45,7 @@ export default function BottomNav() {
   else if (user?.role === 'worker') tabs = workerTabs;
 
   const resolvedTabs = tabs.map(t => {
-    if (t.label === 'Account' && user)
+    if (t.label === 'Login' && user)
       return { ...t, to: '/orders', Icon: HiUser, label: user.name.split(' ')[0] };
     return t;
   });

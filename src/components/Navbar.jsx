@@ -5,24 +5,10 @@ import { useStore } from '../store/useStore';
 import {
   HiChevronDown, HiChevronUp,
   HiClipboardList, HiCog, HiLogout,
-  HiShoppingCart, HiLocationMarker, HiUser,
+  HiLocationMarker, HiUser, HiSearch,
 } from 'react-icons/hi';
-import { MdConstruction, MdEngineering } from 'react-icons/md';
-import { GiCrane, GiPickelhaube } from 'react-icons/gi';
-import { FaTractor, FaRoad, FaSpa, FaLeaf } from 'react-icons/fa';
-import { TbTruckDelivery } from 'react-icons/tb';
+import logo from '../assets/logo.png';
 import './Navbar.css';
-
-const CAT_NAV = [
-  { id: 'excavation',  label: 'Excavation',  Icon: GiPickelhaube  },
-  { id: 'transport',   label: 'Transport',   Icon: TbTruckDelivery },
-  { id: 'road',        label: 'Road',        Icon: FaRoad          },
-  { id: 'lifting',     label: 'Lifting',     Icon: GiCrane         },
-  { id: 'agricultural',label: 'Agricultural',Icon: FaTractor       },
-  { id: 'native',      label: 'Native',      Icon: FaLeaf          },
-  { id: 'beauty',      label: 'Beauty',      Icon: FaSpa           },
-  { id: 'other',       label: 'Other',       Icon: MdEngineering   },
-];
 
 export default function Navbar() {
   const { user, logout } = useAuthStore();
@@ -30,13 +16,18 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [dropOpen, setDropOpen] = useState(false);
+  const [authDropOpen, setAuthDropOpen] = useState(false);
   const [loc, setLoc] = useState('');
   const dropRef = useRef();
+  const authDropRef = useRef();
 
   const isHome = location.pathname === '/';
 
   useEffect(() => {
-    const handler = (e) => { if (!dropRef.current?.contains(e.target)) setDropOpen(false); };
+    const handler = (e) => { 
+      if (!dropRef.current?.contains(e.target)) setDropOpen(false); 
+      if (!authDropRef.current?.contains(e.target)) setAuthDropOpen(false); 
+    };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, []);
@@ -63,21 +54,48 @@ export default function Navbar() {
       <div className="nav-inner">
         <div className="nav-left">
           <Link to="/" className="brand">
-            <MdConstruction className="brand-logo" />
-            <span>Hire<b>Mee</b></span>
+            <img src={logo} alt="OurLocal Logo" className="brand-logo-img" />
           </Link>
-          <div className="location-row">
-            <HiLocationMarker className="loc-icon" />
-            <span className="location-text">{loc || 'Detecting...'}</span>
-          </div>
         </div>
 
         <div className="nav-right">
-          <button className="cart-btn" onClick={() => navigate('/cart')}>
-            <HiShoppingCart className="cart-icon" />
-            <span className="cart-label">Cart</span>
-            {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+          <div className="desktop-links">
+            <Link to="/" className="desktop-link">Home</Link>
+            <Link to="/browse" className="desktop-link">Categories</Link>
+            <Link to="/jobs" className="desktop-link">Jobs</Link>
+            <Link to="/realestate" className="desktop-link">Real Estate</Link>
+            <Link to="/about" className="desktop-link">About Us</Link>
+            <Link to="/contact" className="desktop-link">Contact Us</Link>
+            {user && <Link to="/orders" className="desktop-link">Orders</Link>}
+          </div>
+
+          <button className="nav-search-btn" onClick={() => navigate('/browse')}>
+            <HiSearch className="ns-icon" />
+            <span className="ns-label">Search...</span>
           </button>
+
+          {/* Auth Dropdown */}
+          {!user && (
+            <div className="user-menu" ref={authDropRef}>
+              <button className="btn-nav-primary" onClick={() => setAuthDropOpen(o => !o)} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                Login {authDropOpen ? <HiChevronUp className="chevron-icon" /> : <HiChevronDown className="chevron-icon" />}
+              </button>
+              {authDropOpen && (
+                <div className="dropdown">
+                  <div className="drop-header">
+                    <strong>Select Login</strong>
+                  </div>
+                  <hr />
+                  <Link to="/login" className="drop-item" onClick={() => setAuthDropOpen(false)}>
+                    <HiUser className="drop-icon" /> Worker Login
+                  </Link>
+                  <Link to="/login" className="drop-item" onClick={() => setAuthDropOpen(false)}>
+                    <HiCog className="drop-icon" /> Admin Login
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Only show after login */}
           {user && (
@@ -120,19 +138,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ── Category Nav Row ── */}
-      <div className="cat-nav-row">
-        {CAT_NAV.map(({ id, label, Icon }) => (
-          <button
-            key={id}
-            className="cat-nav-item"
-            onClick={() => navigate(`/browse?cat=${id}`)}
-          >
-            <Icon className="cat-nav-icon" />
-            <span>{label}</span>
-          </button>
-        ))}
-      </div>
     </nav>
   );
 }

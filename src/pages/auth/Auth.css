@@ -13,18 +13,14 @@
   border-right: 1px solid #f0f0f0;
 }
 
-.auth-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 20px;
-  font-weight: 700;
-  color: #1a1a1a;
-  text-decoration: none;
+.auth-logo-wrap {
   margin-bottom: 32px;
 }
-.auth-brand b { color: var(--primary); }
-.auth-brand-icon { width: 24px; height: 24px; color: var(--primary); }
+.auth-logo {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+}
 
 .auth-card h1 { font-size: 28px; font-weight: 800; color: #1a1a1a; margin: 0 0 6px; }
 .auth-sub { font-size: 15px; color: #888; margin: 0 0 24px; }
@@ -123,7 +119,9 @@ form input:focus { border-color: var(--primary); background: #fff; }
 
 /* Right visual panel */
 .auth-visual {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #0284c7 100%);
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -188,25 +186,7 @@ form input:focus { border-color: var(--primary); background: #fff; }
 }
 .auth-back:hover { border-color: #ddd; background: #fafafa; }
 
-/* ── Role Selection ── */
-.role-cards { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
-.role-card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 18px 20px;
-  border: 2px solid #eee;
-  border-radius: 14px;
-  background: #fff;
-  cursor: pointer;
-  text-align: left;
-  font-family: inherit;
-  transition: all 0.18s;
-}
-.role-card:hover { border-color: var(--primary); box-shadow: 0 4px 16px rgba(255,107,0,0.1); }
-.rc-icon { font-size: 32px; flex-shrink: 0; }
-.role-card strong { display: block; font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 3px; }
-.role-card span { font-size: 13px; color: #888; }
+/* ── Removed Role Selection CSS ── */
 
 /* ── Step Indicator ── */
 .reg-steps {

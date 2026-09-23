@@ -6,19 +6,19 @@ import {
   HiIdentification, HiTruck, HiBriefcase,
 } from 'react-icons/hi';
 import { MdConstruction, MdEngineering } from 'react-icons/md';
+import logo from '../../assets/logo.png';
 import './Auth.css';
 
-const VEHICLE_TYPES = [
-  'JCB / Backhoe', 'Excavator', 'Bulldozer', 'Crane', 'Dump Truck / Tipper',
-  'Road Roller', 'Concrete Mixer', 'Forklift', 'Tractor', 'Water Tanker',
-  'Plumber', 'Electrician', 'Carpenter', 'Painter', 'AC Technician', 'Other',
+const SERVICE_TYPES = [
+  'Plumber', 'Electrician', 'Carpenter', 'Painter', 'AC Technician',
+  'Cleaner', 'Mason', 'Mechanic', 'Pest Control', 'Other',
 ];
 
 const EXPERIENCE_OPTIONS = ['Less than 1 year', '1–3 years', '3–5 years', '5–10 years', '10+ years'];
 
 export default function Register() {
-  const [role, setRole] = useState(''); // 'customer' | 'worker'
-  const [step, setStep] = useState(0);  // 0: role, 1: form, 2: worker details, 3: otp
+  const role = 'worker'; // Hardcoded to worker for this app
+  const [step, setStep] = useState(1);  // 1: form, 2: worker details, 3: otp
   const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', confirm: '' });
   const [workerForm, setWorkerForm] = useState({ vehicleType: '', licenseNo: '', experience: '', aadhar: '', address: '' });
   const [otp, setOtp] = useState('');
@@ -47,8 +47,8 @@ export default function Register() {
   const handleWorkerNext = (e) => {
     e.preventDefault();
     setError('');
-    if (!workerForm.vehicleType) { setError('Please select a service/vehicle type'); return; }
-    if (!workerForm.licenseNo) { setError('License/ID number is required'); return; }
+    if (!workerForm.vehicleType) { setError('Please select a service/skill'); return; }
+    if (!workerForm.licenseNo) { setError('Aadhar / ID number is required'); return; }
     setStep(3);
   };
 
@@ -77,51 +77,32 @@ export default function Register() {
     navigate('/login');
   };
 
-  const STEPS = role === 'worker' ? ['Role', 'Details', 'Worker Info', 'OTP'] : ['Role', 'Details', 'OTP'];
-  const currentStep = step;
+  const STEPS = ['Details', 'Professional Info', 'OTP'];
+  const currentStep = step - 1;
 
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <Link to="/" className="auth-brand"><MdConstruction className="auth-brand-icon" /> Hire<b>Mee</b></Link>
+        <div className="auth-logo-wrap">
+          <Link to="/">
+            <img src={logo} alt="Mana Local" className="auth-logo" />
+          </Link>
+        </div>
 
         {/* Step indicator */}
-        {step > 0 && (
-          <div className="reg-steps">
-            {STEPS.map((s, i) => (
-              <div key={s} className={`reg-step ${i < currentStep ? 'done' : i === currentStep ? 'active' : ''}`}>
-                <div className="rs-dot">{i < currentStep ? '✓' : i + 1}</div>
-                <span>{s}</span>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Step 0: Role Selection */}
-        {step === 0 && (
-          <>
-            <h1>Join HireMee</h1>
-            <p className="auth-sub">How would you like to use HireMee?</p>
-            <div className="role-cards">
-              <button className="role-card" onClick={() => handleRoleSelect('customer')}>
-                <div className="rc-icon customer">🏗️</div>
-                <strong>I'm a Customer</strong>
-                <span>Book vehicles & services for my projects</span>
-              </button>
-              <button className="role-card" onClick={() => handleRoleSelect('worker')}>
-                <div className="rc-icon worker">👷</div>
-                <strong>I'm a Worker</strong>
-                <span>Offer my services & earn money</span>
-              </button>
+        <div className="reg-steps">
+          {STEPS.map((s, i) => (
+            <div key={s} className={`reg-step ${i < currentStep ? 'done' : i === currentStep ? 'active' : ''}`}>
+              <div className="rs-dot">{i < currentStep ? '✓' : i + 1}</div>
+              <span>{s}</span>
             </div>
-            <p className="auth-switch">Already have an account? <Link to="/login">Login</Link></p>
-          </>
-        )}
+          ))}
+        </div>
 
         {/* Step 1: Basic Details */}
         {step === 1 && (
           <>
-            <h1>{role === 'worker' ? 'Worker Registration' : 'Create Account'}</h1>
+            <h1>Professional Registration</h1>
             <p className="auth-sub">Enter your basic details</p>
             <form onSubmit={handleFormSubmit}>
               <label>Full Name
@@ -141,10 +122,10 @@ export default function Register() {
               </label>
               {error && <div className="auth-error">⚠️ {error}</div>}
               <button type="submit" className="auth-submit" disabled={loading}>
-                <span>{role === 'worker' ? 'Next: Worker Details' : 'Send OTP'}</span>
+                <span>Next: Professional Details</span>
                 <HiArrowRight style={{ width: 16, height: 16 }} />
               </button>
-              <button type="button" className="auth-back" onClick={() => { setStep(0); setError(''); }}>← Back</button>
+              <p className="auth-switch">Already have an account? <Link to="/login">Login</Link></p>
             </form>
           </>
         )}
@@ -152,20 +133,20 @@ export default function Register() {
         {/* Step 2: Worker Details */}
         {step === 2 && (
           <>
-            <h1>Worker Details</h1>
-            <p className="auth-sub">Tell us about your skills & equipment</p>
+            <h1>Professional Details</h1>
+            <p className="auth-sub">Tell us about your skills & experience</p>
             <form onSubmit={handleWorkerNext}>
-              <label>Service / Vehicle Type
+              <label>Service / Skill
                 <div className="input-wrap">
-                  <HiTruck className="input-icon" />
+                  <HiBriefcase className="input-icon" />
                   <select className="auth-select" value={workerForm.vehicleType} onChange={e => setWorkerForm(p => ({ ...p, vehicleType: e.target.value }))} required>
-                    <option value="">Select type...</option>
-                    {VEHICLE_TYPES.map(v => <option key={v} value={v}>{v}</option>)}
+                    <option value="">Select skill...</option>
+                    {SERVICE_TYPES.map(v => <option key={v} value={v}>{v}</option>)}
                   </select>
                 </div>
               </label>
-              <label>License / Vehicle Reg. No.
-                <div className="input-wrap"><HiIdentification className="input-icon" /><input placeholder="KA 05 AB 1234" {...w('licenseNo')} required /></div>
+              <label>Aadhar / Government ID No.
+                <div className="input-wrap"><HiIdentification className="input-icon" /><input placeholder="XXXX XXXX XXXX" {...w('licenseNo')} required /></div>
               </label>
               <label>Years of Experience
                 <div className="input-wrap">
@@ -176,10 +157,7 @@ export default function Register() {
                   </select>
                 </div>
               </label>
-              <label>Aadhar / ID Number
-                <div className="input-wrap"><HiIdentification className="input-icon" /><input placeholder="XXXX XXXX XXXX" {...w('aadhar')} /></div>
-              </label>
-              <label>Current Address
+              <label>Current City
                 <div className="input-wrap">
                   <MdEngineering className="input-icon" />
                   <input placeholder="City, State" {...w('address')} />
@@ -230,31 +208,15 @@ export default function Register() {
 
       <div className="auth-visual">
         <div className="av-content">
-          {role === 'worker' ? (
-            <>
-              <div className="av-icon">👷</div>
-              <h2>Earn with HireMee</h2>
-              <p>Join thousands of verified workers earning daily on HireMee.</p>
-              <div className="av-features">
-                <div>✅ Get jobs near your location</div>
-                <div>✅ Instant payment on completion</div>
-                <div>✅ Build your reputation & rating</div>
-                <div>✅ Flexible working hours</div>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="av-icon">🚜</div>
-              <h2>Join 12M+ customers on HireMee</h2>
-              <p>Get verified operators, live tracking, and instant booking for all your construction needs.</p>
-              <div className="av-features">
-                <div>✅ Verified & insured operators</div>
-                <div>✅ Real-time GPS tracking</div>
-                <div>✅ Transparent pricing</div>
-                <div>✅ 24/7 support</div>
-              </div>
-            </>
-          )}
+          <div className="av-icon">👨‍🔧</div>
+          <h2>Grow Your Business with Mana Local</h2>
+          <p>Join thousands of verified professionals getting direct leads and jobs daily.</p>
+          <div className="av-features">
+            <div>✅ Get jobs directly from customers</div>
+            <div>✅ Zero commission on your earnings</div>
+            <div>✅ Build your local reputation</div>
+            <div>✅ Choose when and where you work</div>
+          </div>
         </div>
       </div>
     </div>

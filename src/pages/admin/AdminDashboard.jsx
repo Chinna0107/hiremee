@@ -56,45 +56,15 @@ export default function AdminDashboard() {
       {/* Quick Actions */}
       <div className="quick-actions">
         {[
-          { label: 'Manage Orders',    path: '/admin/orders',    cls: 'orange' },
-          { label: 'View Customers',   path: '/admin/customers', cls: 'blue'   },
-          { label: 'Manage Workers',   path: '/admin/workers',   cls: 'green'  },
-          { label: 'Payments',         path: '/admin/payments',  cls: 'purple' },
+          { label: 'Manage Customers',   path: '/admin/customers',     cls: 'blue'   },
+          { label: 'Manage Workers',     path: '/admin/workers',       cls: 'green'  },
+          { label: 'Jobs Posting',       path: '/admin/jobs',          cls: 'orange' },
+          { label: 'Subscriptions',      path: '/admin/subscriptions', cls: 'purple' },
         ].map(({ label, path, cls }) => (
           <button key={path} className={`qa-btn ${cls}`} onClick={() => navigate(path)}>
             {label} <HiArrowRight style={{ width: 14, height: 14 }} />
           </button>
         ))}
-      </div>
-
-      {/* Recent Orders as Cards */}
-      <div className="admin-section">
-        <div className="as-header">
-          <h2>Recent Orders</h2>
-          <button onClick={() => navigate('/admin/orders')}>View all <HiArrowRight style={{ width: 13, height: 13 }} /></button>
-        </div>
-        {recent.length === 0 ? (
-          <div className="empty-msg">No orders yet.</div>
-        ) : (
-          <div className="recent-orders-list">
-            {recent.map(o => (
-              <div key={o.id} className="ro-item" onClick={() => navigate('/admin/orders')}>
-                <div className="ro-left">
-                  <div className="ro-vehicle">{o.vehicle?.name}</div>
-                  <div className="ro-meta">
-                    <span className="mono">#{o.id.slice(-6)}</span>
-                    <span>·</span>
-                    <span>{o.customer?.name || 'Guest'}</span>
-                  </div>
-                </div>
-                <div className="ro-right">
-                  <div className="ro-amount">₹{o.booking?.total?.toLocaleString() || '—'}</div>
-                  <span className={`status-chip ${o.status}`}>{o.status}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
 
       {/* Workers */}

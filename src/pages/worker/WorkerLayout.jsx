@@ -1,15 +1,14 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
-import { HiHome, HiClipboardList, HiClock, HiCurrencyRupee, HiUser } from 'react-icons/hi';
-import { MdConstruction } from 'react-icons/md';
+import { HiHome, HiUser, HiBriefcase, HiCurrencyRupee } from 'react-icons/hi';
+import logo from '../../assets/logo.png';
 import './Worker.css';
 
 const NAV = [
-  { to: '/worker',          icon: HiHome,           label: 'Home'    },
-  { to: '/worker/orders',   icon: HiClipboardList,  label: 'Orders'  },
-  { to: '/worker/history',  icon: HiClock,          label: 'History' },
-  { to: '/worker/wallet',   icon: HiCurrencyRupee,  label: 'Wallet'  },
-  { to: '/worker/profile',  icon: HiUser,           label: 'Profile' },
+  { to: '/worker',                icon: HiHome,           label: 'Dashboard'  },
+  { to: '/worker/services',       icon: HiBriefcase,      label: 'Services'   },
+  { to: '/worker/subscription',   icon: HiCurrencyRupee,  label: 'Plan'       },
+  { to: '/worker/profile',        icon: HiUser,           label: 'Profile'    },
 ];
 
 export default function WorkerLayout() {
@@ -20,8 +19,7 @@ export default function WorkerLayout() {
     <div className="worker-layout">
       <header className="worker-top-header">
         <div className="wth-brand">
-          <MdConstruction className="wth-logo-icon" />
-          <span>Hire<b>Mee</b></span>
+          <img src={logo} alt="Mana Local" style={{ height: '32px', marginRight: '8px', objectFit: 'contain' }} />
           <span className="wth-badge">Worker</span>
         </div>
         <div className="wth-user">

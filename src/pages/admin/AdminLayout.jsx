@@ -1,16 +1,18 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useState, useRef, useEffect } from 'react';
-import { HiHome, HiClipboardList, HiUsers, HiDotsHorizontal, HiLogout, HiChevronDown } from 'react-icons/hi';
+import { HiHome, HiClipboardList, HiUsers, HiDotsHorizontal, HiLogout, HiChevronDown, HiDocumentText, HiCurrencyRupee, HiChartBar } from 'react-icons/hi';
 import { MdEngineering, MdConstruction } from 'react-icons/md';
+import logo from '../../assets/logo.png';
 import './Admin.css';
 
 const NAV = [
-  { to: '/admin',           icon: HiHome,           label: 'Dashboard', end: true },
-  { to: '/admin/orders',    icon: HiClipboardList,  label: 'Orders'              },
-  { to: '/admin/customers', icon: HiUsers,          label: 'Customers'           },
-  { to: '/admin/workers',   icon: MdEngineering,    label: 'Workers'             },
-  { to: '/admin/more',      icon: HiDotsHorizontal, label: 'More'                },
+  { to: '/admin',                       icon: HiHome,           label: 'Dashboard', end: true },
+  { to: '/admin/customers',             icon: HiUsers,          label: 'Customers'           },
+  { to: '/admin/workers',               icon: MdEngineering,    label: 'Workers'             },
+  { to: '/admin/jobs',                  icon: HiClipboardList,  label: 'Jobs Posting'        },
+  { to: '/admin/subscriptions',         icon: HiCurrencyRupee,  label: 'Subscriptions'       },
+  { to: '/admin/subscription-reports',  icon: HiChartBar,       label: 'Reports'             },
 ];
 
 export default function AdminLayout() {
@@ -33,8 +35,7 @@ export default function AdminLayout() {
       {/* Top Header */}
       <header className="admin-top-header">
         <div className="ath-brand">
-          <MdConstruction className="ath-logo-icon" />
-          <span>Hire<b>Mee</b></span>
+          <img src={logo} alt="Mana Local" style={{ height: '32px', marginRight: '8px', objectFit: 'contain' }} />
           <span className="ath-badge">Admin</span>
         </div>
         <div className="ath-user" ref={dropRef}>

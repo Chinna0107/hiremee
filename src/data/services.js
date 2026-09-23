@@ -101,4 +101,10 @@ export const services = [
   },
 ];
 
+export const categories = [
+  { id: 'home-services', label: 'Home Services' },
+  { id: 'cleaning', label: 'Cleaning & Hygiene' },
+  { id: 'construction', label: 'Construction' }
+];
+
 export const highlightedServices = services.slice(0, 6);
